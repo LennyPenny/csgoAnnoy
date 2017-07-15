@@ -29,7 +29,7 @@ namespace csgoAnnoy
             psi.CreateNoWindow = true;
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.FileName = "SourceCmd";
-            psi.Arguments = $"csgo.exe \"{cmd} {args} \"";
+            psi.Arguments = $"csgo.exe \"{cmd} {args};\"";
             Process.Start(psi);
         }
 
