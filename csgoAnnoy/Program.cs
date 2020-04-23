@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Sockets;
 
 using CSGSI;
 using CSGSI.Nodes;
@@ -23,21 +25,23 @@ namespace csgoAnnoy
 
         private static Random rndm;
 
+        private static TcpClient tn;
+
         private static void RunCmd(string cmd, string args = "")
         {
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.CreateNoWindow = true;
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.FileName = "SourceCmd";
-            psi.Arguments = $"csgo.exe \"{cmd} {args};\"";
-            Process.Start(psi);
+            //ProcessStartInfo psi = new ProcessStartInfo();
+            //psi.CreateNoWindow = true;
+            //psi.WindowStyle = ProcessWindowStyle.Hidden;
+            //psi.FileName = "SourceCmd";
+            //psi.Arguments = $"csgo.exe \"{cmd} {args};\"";
+            //Process.Start(psi);
+            var bytes = Encoding.UTF8.GetBytes($"{cmd} {args};\n");
+            tn.GetStream().Write(bytes, 0, bytes.Length);
         }
 
         private static void OnKill(bool headshot = false)
         {
             Console.WriteLine($"Killed someone! headshot: {headshot}");
-
-
 
             if (headshot)
                 RunCmd("say", rant.Do(hstaunts[rndm.Next(hstaunts.Count)]));
@@ -45,8 +49,21 @@ namespace csgoAnnoy
                 RunCmd("say", rant.Do(taunts[rndm.Next(taunts.Count)]));
         }
 
+        protected static void myHandler(object sender, ConsoleCancelEventArgs args) {
+            tn.Close();
+
+            Console.WriteLine("asd");
+        }
+
         static void Main(string[] args)
         {
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
+
+            // connect to game socket
+            tn = new TcpClient();
+            tn.Connect("127.0.0.1", 2121);
+            RunCmd("echo", "hello world!!");
+            
             //load taunts
             taunts.AddRange(File.ReadAllLines("taunts.txt"));
             hstaunts.AddRange(File.ReadAllLines("hstaunts.txt"));
