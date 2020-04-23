@@ -41,9 +41,8 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rant, Version=2.0.360.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rant.2.0.360\lib\net45\Rant.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Rant, Version=3.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rant.3.0.531\lib\net45\Rant.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +65,7 @@
     <Content Include="hstaunts.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Rant License.txt" />
     <Content Include="SourceCmd.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
